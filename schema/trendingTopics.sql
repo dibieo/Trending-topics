@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `feed` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'insertion date',
   PRIMARY KEY (`id`),
   KEY `source_id` (`source_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `feeditem_tag` (
   PRIMARY KEY (`id`),
   KEY `feeditem_id` (`feeditem_id`),
   KEY `tag_id` (`tag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `feed_item` (
   `feed_id` int(11) NOT NULL,
   PRIMARY KEY (`id`,`feed_id`),
   KEY `fk_feed_item_feed1` (`feed_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `feed_tag` (
   PRIMARY KEY (`tag_id`,`feed_id`,`id`),
   KEY `fk_tag_has_feed_feed1` (`feed_id`),
   KEY `fk_tag_has_feed_tag1` (`tag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `source` (
   `link` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `source`
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
   `count` int(11) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Constraints for dumped tables
@@ -152,6 +152,17 @@ ALTER TABLE `feeditem_tag`
 ALTER TABLE `feed_tag`
   ADD CONSTRAINT `fk_tag_has_feed_tag1` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_tag_has_feed_feed1` FOREIGN KEY (`feed_id`) REFERENCES `feed` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Adding the weight returned by WikipediaMiner, soheil
+--
+ALTER TABLE `feeditem_tag` ADD COLUMN `weight_miner` DECIMAL(11) NULL  AFTER `date` ;
+
+--
+-- Adding column to tag table to store the topic-id returned by wikipedieminer's wikifer service
+--
+ALTER TABLE `tag` ADD COLUMN `id_miner` INT(11) NULL  AFTER `date` ;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
