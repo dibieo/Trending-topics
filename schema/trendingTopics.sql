@@ -163,7 +163,18 @@ ALTER TABLE `feeditem_tag` ADD COLUMN `weight_miner` DECIMAL(11) NULL  AFTER `da
 --
 ALTER TABLE `tag` ADD COLUMN `id_miner` INT(11) NULL  AFTER `date` ;
 
+-- 3/29/12 by Houman: Add foreign key connection between "feed" and "feed_item"
+ALTER TABLE  `feed_item` ADD FOREIGN KEY (  `feed_id` ) REFERENCES  `tt`.`feed` (
+`id`
+) ON DELETE RESTRICT ON UPDATE RESTRICT ;
 
+-- 3/30/12 by Houman: Add a unique index on "link" column of the "source" table
+ALTER TABLE  `source` CHANGE  `link`  `link` VARCHAR( 200 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL 
+ALTER TABLE  `source` ADD UNIQUE (
+`link`
+)
+-- 3/30/12 by Houman: Allow null value for "Title" column of the "source" table
+ALTER TABLE  `source` CHANGE  `title`  `title` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
