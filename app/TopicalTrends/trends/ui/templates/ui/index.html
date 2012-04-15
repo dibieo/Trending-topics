@@ -1,0 +1,7 @@
+<form action="/ui/" method="GET">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+{% if value %}<p><strong>{{value}}</strong></p>
+{% else %}<p><strong>No results found for your search term</strong></p>
+{% endif %}
