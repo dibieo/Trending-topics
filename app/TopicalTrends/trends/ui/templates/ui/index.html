@@ -1,7 +1,60 @@
-<form action="/ui/" method="GET">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
-{% if value %}<p><strong>{{value}}</strong></p>
-{% else %}<p><strong>No results found for your search term</strong></p>
-{% endif %}
+<html>
+    <head>
+        <title>Topical Trending</title>
+        {% load static %}
+        <LINK href="{% get_static_prefix %}general.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <div class="master frontPage">
+            <div class="pane0">
+                {% if freqTopics %}
+                    <p> Hot Trends:</p>
+
+                    {% for topic in freqTopics %}
+                        <div>
+							<a href='http://127.0.0.1:8000/ui/?input={{ topic.0 }}'>{{topic}}</a>
+                            <hr>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+                    <p><strong>No hot trends to show</strong></p>
+                {% endif %}
+                
+            </div>
+            <div class="pane1">     
+                <form action="/ui/" method="GET">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit" />
+                </form>
+
+                {% if freqTopicSets %}
+                    <p> here are some topics identified as trends related to <strong>{{query}}</strong> : </p>
+
+                    {% for topicSet_linkSet in topicSet_linkSets %}
+                        <div>
+							<div class="topicset">
+                            	{{ topicSet_linkSet.0 }}
+							</div>
+                            {%for link in topicSet_linkSet.1%}
+								<div class="link">
+									<a href={{link.1}}>{{link.0}}</a>                                	
+								</div>
+                            {%endfor%}
+                            <hr>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+                    {%if query%}
+                        <p><strong>No results found for your search term</strong></p>
+                    {% else %}
+                        <p><strong>Enter a search term</strong></p>
+                    {% endif %}
+                    
+                {% endif %}
+            </div>
+        </div> <!-- end master div -->
+    </body>
+</html>

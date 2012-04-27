@@ -28,4 +28,3 @@ class MyUtilities(object):
     def sortDicByKeyLen(dic):
         ''' Returns input dictionary dic sorted by length of the keys in ascending order '''
         return sorted(dic.items(), key=lambda (k, v): len(k))
-    

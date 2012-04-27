@@ -7,7 +7,7 @@ import MySQLdb as mdb
 import itemmining
 from DBConf import DBConf as dbc
 from MyUtilities import MyUtilities
-from TopicalTrends.MyConf import MyConf as params
+from MyConf import MyConf as params
 
 class Analysis(object):
     ''' Handles analysis of our data
@@ -104,6 +104,7 @@ class Analysis(object):
                                      dbc.passwrd,
                                      dbc.db)
                 c = db.cursor()
+				#Question By Soheil (for Houman): does this query return the set of all tags that co-occur with the query tag but not the query tag itself, along with the id of the feed item that contains that tag?( if so then let's leave the comment cuz i might not remember in the future :) april.24
                 c.execute('''SELECT fit.feeditem_id, t.title 
                            FROM `feeditem_tag` fit 
                            INNER JOIN `tag` t ON fit.tag_id = t.id 
@@ -117,6 +118,8 @@ class Analysis(object):
                 feeditemTopics = ()
                 topicSet = ()
                 feeditemID = ''
+				
+				#soheil:making sets of tags that represent a feed item? (note: if this ever becomes an efficiency bottleneck, consider replacing this loop with a GROUP BY feeditem_id in the above sql query)
                 for r in rows:
                     if feeditemID == r[0]:
                         topicSet += (r[1],)
@@ -132,7 +135,7 @@ class Analysis(object):
                     c.close()
                     db.close()
             relimInput = itemmining.get_relim_input(feeditemTopics)
-            freqTopicSets = itemmining.relim(relimInput, sup)    # fined freq topic sets
+            freqTopicSets = itemmining.relim(relimInput, sup)    # find freq topic sets
             freqTopicSets = MyUtilities.sortDicByKeyLen(freqTopicSets) # sort the freq topic sets by frequency and change the data structure
             freqTopicSets = Analysis.convetFrozensetToList(freqTopicSets) # convert the data structure of freq topic sets so they become process friendly
             if maximal:  # ignore non-maximal freq topic sets and return only maximal ones

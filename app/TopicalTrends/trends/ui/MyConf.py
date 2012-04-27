@@ -22,6 +22,6 @@ class MyConf:
 
     maxAllowedSupport = 10 # start with this support and reduce it until it is lees than minSupport or # of frequent topic sets found is less than minFreqTopicSetsCount
     minAllowedSupport = 4 # min support used in finding frequent topic sets
-    minFreqTopicSetsCount = 20
+    minFreqTopicSetsCount = 50
     
     output = True   # enable/disable terminal output

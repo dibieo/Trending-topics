@@ -1,10 +1,10 @@
 import feedparser 
 import MySQLdb as mdb
 import autotagger
-from TopicalTrends.DBConf import DBConf as dbc
+from DBConf import DBConf as dbc
 import hashlib
-from TopicalTrends.MyConf import MyConf as params
-from TopicalTrends.TimeoutException import  timeout
+from MyConf import MyConf as params
+from TimeoutException import  timeout
 
 @timeout(params.timeout, None) # timeout this function if it takes more than params.timeout
 def parseUrl(url):

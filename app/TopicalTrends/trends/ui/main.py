@@ -7,7 +7,7 @@ Created on Mar 31, 2012
 
 from Analysis import Analysis
 from datetime import datetime
-from pyparsing import Combine
+#from pyparsing import Combine soheil: not seeing this getting used anywhere, and giving error that module doesn't exist so commenting out to see if it works -- and it Did work fine with this commented out
 
 if __name__ == '__main__':
     pass

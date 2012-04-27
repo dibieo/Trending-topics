@@ -6,12 +6,6 @@
 import MySQLdb as mdb
 from TopicalTrends.DBConf import DBConf as dbc
 
-#soheilTODO we shuold only get the link, the title and description can be gotten from rss itself
-#feeds = {
-#"link" : "http://www.sciencenews.org/view/feed/type/news/name/articles.rss",
-#"title" : "Science News",
-#"description" : "News about science"
-#}
 
 # duplicates will be ignored at database insertion time (unique index is in use) 
 feed_links = (
@@ -206,7 +200,8 @@ feed_links = (
 #       VALUES ('%s', '%s', '%s', '%s' )" % \
 #       (feeds['title'], feeds['description'], feeds['link'], datetime.datetime.now())
 try:    
-    con = mdb.connect(dbc.host, dbc.user, dbc.passwrd, dbc.db, charset="utf8")
+    print(dbc.host, dbc.user, dbc.passwrd, dbc.db)
+	con = mdb.connect(dbc.host, dbc.user, dbc.passwrd, dbc.db, charset="utf8")
     cursor = con.cursor()
 
     #insert the feed links and into source table #soheilTODO: have to add link title, description and some date later on when we are actually reading the feed

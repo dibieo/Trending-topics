@@ -4,7 +4,7 @@
 #Feeds are inserted manually, but may be processed from a form or another input source in the future
 
 import MySQLdb as mdb
-from TopicalTrends.DBConf import DBConf as dbc
+from DBConf import DBConf as dbc
 import hashlib
 
 #soheilTODO we shuold only get the link, the title and description can be gotten from rss itself

@@ -3,10 +3,10 @@ import urllib
 from xml.dom import minidom #got the idea from http://developer.yahoo.com/python/python-xml.html
 import MySQLdb as mdb #using mysqldb according to http://mysql-python.sourceforge.net/MySQLdb.html
 import datetime
-from TopicalTrends.DBConf import DBConf as dbc
-from TopicalTrends.MyConf import MyConf as params
-from TopicalTrends.MLStripper import strip_tags
-from TopicalTrends.TimeoutException import timeout
+from DBConf import DBConf as dbc
+from MyConf import MyConf as params
+from MLStripper import strip_tags
+from TimeoutException import timeout
 
 @timeout(params.timeout, None)  # timeout this function if it takes more than params.timeout
 def wikify(url):
