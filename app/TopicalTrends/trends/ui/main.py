@@ -14,4 +14,4 @@ if __name__ == '__main__':
 #print report
 
 results = Analysis.getFreqTopics(3, 0)
-print Analysis.getFreqfeeditemTopics(2, 1, 'mathematics')
+print Analysis.getFreqfeeditemTopics(2, 1, 'microsoft')
