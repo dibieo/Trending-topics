@@ -1,0 +1,17 @@
+
+/* this is the left most pane, the one to its right will be pane1 and so on */
+div.master
+{
+	width:1000px;
+	height:1000px;
+	background:yellow;
+}
+.frontPage .pane0
+{
+	width: 300px;
+}
+
+.frontPage .pane1
+{
+	background-color:blue;
+}

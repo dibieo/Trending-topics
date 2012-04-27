@@ -8,7 +8,7 @@ class DBConf:
     
     # SQL connection info
     host = 'localhost'
-    user = 'tt'
-    passwrd = 'tt123'
+    user = 'azamtaghipour'
+    passwrd = ""
     db = 'tt'
     

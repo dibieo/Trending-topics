@@ -17,7 +17,7 @@ class MyUtilities(object):
         return sorted(dic.items(), key=lambda (k, v): (v, k))
 
     @staticmethod
-    def sortTuplesListByVal(l):
+    def sortTupleListByVal(l):
         ''' Returns input list of tuples l sorted by their values
             input: like [(k1, v1), ...]
             input: similar to input but sorted in ascending order by keys
@@ -28,5 +28,3 @@ class MyUtilities(object):
     def sortDicByKeyLen(dic):
         ''' Returns input dictionary dic sorted by length of the keys in ascending order '''
         return sorted(dic.items(), key=lambda (k, v): len(k))
-
-        

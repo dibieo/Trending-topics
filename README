@@ -13,3 +13,14 @@ Launch the app on in a web browser by going to http://127.0.0.1:8000/ui
 You should see a search form
 
 Results to search input would be returned like when you run the main.py method.
+
+
+---------
+soheil's old notes on running the code:
+running the code is simple:
+from the python interactive console
+1- import insertFeeds  
+//explanation: this will read the feeds in the feed_links and put them in the source table (just the link for now, no additional data, for now) unless you want to change the feeds being read you only have to run this once
+
+2- import insertFeedItems
+//explanation: this will read items from the feeds in source and will tag them storing the results in the feed_item, tags and feeditem_tags tables
