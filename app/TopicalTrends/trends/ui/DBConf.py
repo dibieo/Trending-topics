@@ -9,6 +9,6 @@ class DBConf:
     # SQL connection info
     host = 'localhost'
     user = 'root'
-    passwrd = ''
-    db = 'tt'
+    passwrd = 'america'
+    db = 'topicaltrends'
     

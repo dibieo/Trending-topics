@@ -23,10 +23,9 @@ def index(request):
     query = ''
     freqTopics = ''
 
-    # SOHEILTODO: include this in run instructions, ie change the times to match times you have data for in db, if no times are specified by the user, to be added
-    #time2 = datetime.now()
-    time2 = datetime.date(2012, 4, 23)
-    time1 = time2 - timedelta(days=3)
+    time2 = datetime.datetime.now()  # Get current time stamp
+   # time2 = datetime.date(2012, 4, 29)
+    time1 = time2 - timedelta(days=8) # Find trends from the last 8 days.
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     #pdb.set_trace() how to do debugging
 
@@ -37,7 +36,7 @@ def index(request):
     topicSet_linkSets = []
     if form.is_valid():        
         if(request.GET.has_key('input')):
-            freqTopicSets = Analysis.getFreqTopicSets(request.GET['input'])
+            freqTopicSets = Analysis.getFreqTopicSets(request.GET['input']) 
    
             for topicSet in freqTopicSets:
                 tag_ids = []

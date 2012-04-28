@@ -33,7 +33,12 @@ def insert_feeditem_tags(feeditem_id):
     #if not isinstance(url,unicode):
     url = url.encode('utf8')
 
-    dom = wikify(url)
+    dom = None
+    try:
+        dom = wikify(url)
+    except:
+        pass
+
     if dom: # if wikifier successfully wikified the source and no timeout occurred
         topics = dom.getElementsByTagName('DetectedTopic')
         
