@@ -23,9 +23,9 @@ def index(request):
     query = ''
     freqTopics = ''
 
-    time2 = datetime.datetime.now()  # Get current time stamp
-   # time2 = datetime.date(2012, 4, 29)
-    time1 = time2 - timedelta(days=8) # Find trends from the last 8 days.
+
+    time2 = datetime.datetime.now() 
+    time1 = time2 - timedelta(days=3)
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     #pdb.set_trace() how to do debugging
 

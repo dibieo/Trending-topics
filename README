@@ -2,7 +2,7 @@ Running the project
 
 Install Django. We're using the latest version django 1.4 https://docs.djangoproject.com/en/1.4/topics/install/#installing-official-release
 
-Change the template_DIR  location in ~/app/TopicalTrends/trends/trends/settings.py to match the absolute path to the template directory on your machine. Right now, it is     '/home/ovo/Documents/Treding-topics/app/TopicalTrends/trends/ui/templates' on my machine.
+Update STATICFILES_DIRS and TEMPLATE_DIRS in ~/app/TopicalTrends/trends/trends/settings.py
 
 Start django development webserver by going to ~/app/TopicalTrends/trends/ and running python manage.py runserver
 

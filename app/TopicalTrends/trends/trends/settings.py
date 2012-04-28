@@ -72,7 +72,11 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 
 	#note trailing comma, source: http://stackoverflow.com/questions/9339226/how-to-load-css-in-django-templates
+<<<<<<< HEAD
 	'/home/ovo/Documents/Treding-topics/app/TopicalTrends/trends/trends/staticFiles',
+=======
+	'/home/houman/projects/topical_trends/Trending-topics/app/TopicalTrends/trends/trends/staticFiles',
+>>>>>>> 3bd3aca969e04d27d75b8cddf9a1833161719f86
 )
 
 # List of finder classes that know how to find static files in
@@ -112,7 +116,11 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+<<<<<<< HEAD
    	  '/home/ovo/Documents/Treding-topics/app/TopicalTrends/trends/ui/templates'
+=======
+   	  '/home/houman/projects/topical_trends/Trending-topics/app/TopicalTrends/trends/ui/templates'
+>>>>>>> 3bd3aca969e04d27d75b8cddf9a1833161719f86
 )
 
 INSTALLED_APPS = (

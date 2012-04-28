@@ -89,7 +89,7 @@ class Analysis(object):
     @staticmethod
     def getFreqTopicSets(query, minSup=params.maxAllowedSupport, maximal=True): # len is ignored for now
         ''' Returns frequent topic sets containing the query and having a length of len
-            and a support value of greater than minSup
+            and a support value of greater than minSup3
             
             output: list of tuples: [([topic1, topic2, ... ],Freq), ...]
         '''
@@ -134,8 +134,8 @@ class Analysis(object):
                     db.commit()
                     c.close()
                     db.close()
-            relimInput = itemmining.get_relim_input(feeditemTopics)
-            freqTopicSets = itemmining.relim(relimInput, sup)    # find freq topic sets
+            relimInput = itemmining.get_sam_input(feeditemTopics)
+            freqTopicSets = itemmining.sam(relimInput, sup)    # find freq topic sets
             freqTopicSets = MyUtilities.sortDicByKeyLen(freqTopicSets) # sort the freq topic sets by frequency and change the data structure
             freqTopicSets = Analysis.convetFrozensetToList(freqTopicSets) # convert the data structure of freq topic sets so they become process friendly
             if maximal:  # ignore non-maximal freq topic sets and return only maximal ones
