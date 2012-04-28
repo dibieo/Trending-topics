@@ -15,10 +15,13 @@ import hashlib
 #}
 
 # duplicates will be ignored at database insertion time (unique index is in use) 
-feed_links = ()
+feed_links = []
+print "Reading RSS feeds file .. "
 f = open('rss_feeds', 'r')
 for line in f:
 	feed_links.append(line)
+
+print "Finished reading file"
 
 #sql =  "INSERT INTO source(title, \
 #       description, link, date) \
