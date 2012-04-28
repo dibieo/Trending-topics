@@ -29,23 +29,21 @@ def insert_feeditems(feed_id, url):
             link = ''
             guid = ''
             hash = ''
-            if 'link' in f:
-                if len(f.link) > 0:
-                    link = f.link
-                    h = hashlib.sha512()
-                    h.update(str(link))
-                    hash = h.hexdigest()
+            
             if 'guid' in f:
-                if len(f.guid) > 0:
-                    guid = f.guid
+                guid = f.guid
+                              
+            if 'title' in f:
+                unique = f.title  # the hash of this string is considered a unique value for each feed
+                if len(unique) > 0:
                     h = hashlib.sha512()
-                    h.update(str(guid))
-                    hash = h.hexdigest()                
+                    h.update(str(unique))
+                    hash = h.hexdigest()
             if len(hash) > 0:
-                if 'title' in f and 'description'in f:
+                if 'link' in f and 'title' in f and 'description'in f:
                     pubDate = ''
-                    if 'pubDate' in f:
-                        pubDate = f.pubDate
+                    if 'published' in f:    # the value of pubDate tag within each feed
+                        pubDate = f.published
                     try:
                         c.execute('SELECT id FROM feeditem WHERE hash = %s', (hash))
                         if len(c.fetchall()) == 0:
@@ -59,7 +57,7 @@ def insert_feeditems(feed_id, url):
                                      VALUES (%s, %s, %s, %s, %s, %s, %s)""",
                                                            (f.title,
                                                             f.description,
-                                                            link,
+                                                            f.link,
                                                             guid,
                                                             hash,
                                                             pubDate,

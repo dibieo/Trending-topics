@@ -25,7 +25,7 @@ def index(request):
 
     # SOHEILTODO: include this in run instructions, ie change the times to match times you have data for in db, if no times are specified by the user, to be added
     #time2 = datetime.now()
-    time2 = datetime.date(2012, 4, 23)
+    time2 = datetime.datetime.now() #date(2012, 4, 23)
     time1 = time2 - timedelta(days=3)
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     #pdb.set_trace() how to do debugging
