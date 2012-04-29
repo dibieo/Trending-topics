@@ -1,0 +1,12 @@
+  {% if freqTopics %}
+                   {% for topic in freqTopics %}
+                        <div>
+							<a href='http://127.0.0.1:8000/ui/?input={{ topic.0 }}'>{{topic}}</a>
+                            <hr>
+                        </div>
+                    {% endfor %}
+		    </div>
+                {% else %}
+                    <p><strong>No hot trends to show</strong></p>
+                {% endif %}
+                

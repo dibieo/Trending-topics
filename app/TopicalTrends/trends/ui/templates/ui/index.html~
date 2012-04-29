@@ -1,6 +1,5 @@
 <html>
     <head>
-    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Topical Trending</title>
         {% load static %}
         <LINK href="{% get_static_prefix %}general.css" rel="stylesheet" type="text/css">
@@ -19,9 +18,8 @@
 				  <option value= "lastmonth">Last Month</option>
 				  </select></p>
 		
-		   <div id="freqtopics">
 		   {% if freqTopics %}
-
+                     <div id="freqtopics">
                     {% for topic in freqTopics %}
                         <div>
 							<a href='http://127.0.0.1:8000/ui/?input={{ topic.0 }}'>{{topic}}</a>
@@ -31,7 +29,6 @@
                 {% else %}
                     <p><strong>No hot trends to show</strong></p>
                 {% endif %}
-		</div>
 		</div>
 
                 
@@ -52,9 +49,7 @@
 							</div>
                             {%for link in topicSet_linkSet.1%}
 								<div class="link">
-
-										<a target="_blank" href={{link.1}}>{{link.0}}</a>
- 
+									<a target="_blank" href={{link.1}}>{{link.0}}</a>
 								</div>
                             {%endfor%}
                             <hr>

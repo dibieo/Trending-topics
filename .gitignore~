@@ -1,6 +1,9 @@
 *.pyc
+<<<<<<< HEAD
 app/TopicalTrends/trends/trends/settings.py
 app/TopicalTrends/trends/ui/DBConf.py
 app/TopicalTrends/trends/.metadata/
 app/TopicalTrends/trends/ui/.metadata/
+=======
+>>>>>>> 7628ce5d5e916122c308b4b6a5dd231fd601c7d0
 

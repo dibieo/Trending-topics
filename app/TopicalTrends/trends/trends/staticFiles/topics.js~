@@ -1,0 +1,11 @@
+$(document).ready(function() {
+ 
+$(".sort").change(function() {
+var input = $(this).val();
+//alert("you changed to : " + $(this).val());
+$("#freqtopics").html("<div>loading</div>");
+$.get("/ui/topics?sort=" + input, function(data){
+  $("#freqtopics").html(data);
+});
+})
+});
