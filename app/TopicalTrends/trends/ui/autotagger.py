@@ -41,7 +41,6 @@ def insert_feeditem_tags(feeditem_id):
     item_desc = strip_tags(row[1])
     item_url = row[2]
     textToWikify = filterTitleDescription(item_title, item_desc)
-    pdb.set_trace()
     textToWikify = urllib.quote_plus(textToWikify.encode('utf-8'))  # replace special chars in string using %xx escape
 
     #remove stop words for this feed from text to be wikfied, usually feed specific stopwords are those that are repeated a lot in some feed, like the name of a news agency in its own articles
