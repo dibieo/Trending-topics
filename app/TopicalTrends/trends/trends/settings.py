@@ -72,6 +72,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 
 	#note trailing comma, source: http://stackoverflow.com/questions/9339226/how-to-load-css-in-django-templates
+
     '/Users/azamtaghipoor/projects/topicalTrending/github/Trending-topics/app/TopicalTrends/trends/trends/staticFiles',
 )
 

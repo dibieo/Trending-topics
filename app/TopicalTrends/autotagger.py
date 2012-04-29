@@ -20,6 +20,9 @@ def insert_feeditem_tags(feeditem_id):
     item_title = row[0]
     item_desc = row[1]
     textToWikify = item_title + item_desc
+
+	#ignore stop words for this feed
+	for stopList in 
         
     
     #call wikify
@@ -55,10 +58,6 @@ def insert_feeditem_tags(feeditem_id):
                                       datetime.datetime.now(),
                                       topic_id_miner) 
                                     ])
-        
-        else:
-            print("tag already exists:" + topic_title)
-            #soheilTODO increment count indicating this tag has been seen again
 
         #do another select to get the tag_id to be associated with the feed_item
         cursor.execute("""SELECT * FROM tag WHERE title = %s""", (topic_title,))

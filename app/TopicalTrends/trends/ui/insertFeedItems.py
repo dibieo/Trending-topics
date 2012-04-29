@@ -10,6 +10,7 @@ from TimeoutException import  timeout
 def parseUrl(url):
     return feedparser.parse(url)
 
+
 #This function inserts items into the feed item table
 def insert_feeditems(feed_id, url):   
     
@@ -37,7 +38,7 @@ def insert_feeditems(feed_id, url):
                 unique = f.title  # the hash of this string is considered a unique value for each feed
                 if len(unique) > 0:
                     h = hashlib.sha512()
-                    h.update(str(unique))
+                    h.update(str(unique.encode('utf8')))
                     hash = h.hexdigest()
             if len(hash) > 0:
                 if 'link' in f and 'title' in f and 'description'in f:
@@ -55,12 +56,12 @@ def insert_feeditems(feed_id, url):
                                                             pub_date,                                            
                                                             feed_id)
                                      VALUES (%s, %s, %s, %s, %s, %s, %s)""",
-                                                           (f.title,
-                                                            f.description,
-                                                            f.link,
-                                                            guid,
-                                                            hash,
-                                                            pubDate,
+                                                           (f.title.encode('utf8'),
+                                                            f.description.encode('utf8'),
+                                                            f.link.encode('utf8'),
+                                                            guid.encode('utf8'),
+                                                            hash.encode('utf8'),
+                                                            pubDate.encode('utf8'),
                                                             feed_id,) #soheilTODO replace datetime.now (not sure which one) with pub_date 
                                                            )
                             #print 'new feeditem!'
