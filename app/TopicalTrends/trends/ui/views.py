@@ -13,6 +13,7 @@ import feeditem
 from tag import Tag
 import pdb
 import copy
+import urllib
 
 class searchForm(forms.Form):
     input = forms.CharField()
@@ -25,7 +26,7 @@ def index(request):
 
 
     time2 = datetime.datetime.now() 
-    time1 = time2 - timedelta(days=3)
+    time1 = time2 - timedelta(days=1)
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     #pdb.set_trace() how to do debugging
 
@@ -36,7 +37,7 @@ def index(request):
     topicSet_linkSets = []
     if form.is_valid():        
         if(request.GET.has_key('input')):
-            freqTopicSets = Analysis.getFreqTopicSets(request.GET['input']) 
+            freqTopicSets = Analysis.getFreqTopicSets(request.GET['input'], time1, time2) 
    
             for topicSet in freqTopicSets:
                 tag_ids = []
@@ -54,9 +55,13 @@ def index(request):
             
                 print(topicSet)
                 #pdb.set_trace()
-                feeditems = feeditem.Feeditem.findByTags(tag_ids)
+                feeditems = feeditem.Feeditem.findByTags(tag_ids, time1, time2)
                 for item in feeditems:
-                    links.append((item[1],item[3]))
+                    print item[1]
+                    t1 = unicode(unicode(item[1],'utf-8', errors='ignore'))
+                    t2 = unicode(item[3])
+
+                    links.append((t1,t2))
                 linkSets.append(copy.copy(links))
                 
                 topicSet_linkSets = zip(freqTopicSets, linkSets)

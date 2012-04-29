@@ -21,7 +21,7 @@ class MyConf:
     timeout = 20 # the maximum period of time a feed's url is allowed to take to load
 
     maxAllowedSupport = 10 # start with this support and reduce it until it is lees than minSupport or # of frequent topic sets found is less than minFreqTopicSetsCount
-    minAllowedSupport = 2 # min support used in finding frequent topic sets
+    minAllowedSupport = 3 # min support used in finding frequent topic sets
     minFreqTopicSetsCount = 100
     
     output = True   # enable/disable terminal output

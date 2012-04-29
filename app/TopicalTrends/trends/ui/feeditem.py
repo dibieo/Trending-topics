@@ -9,7 +9,10 @@ class Feeditem:
     ''' returns feed items that contain all the tags in "tag_ids" '''
     #TODO add time span
     @staticmethod
-    def findByTags(tag_ids):
+    def findByTags(tag_ids, time1, time2):
+        '''
+            finds feeditems containing tags with tag_ids ids
+        '''
         try:
             db = mdb.Connect(dbc.host, dbc.user, dbc.passwrd, dbc.db)
             c = db.cursor()
@@ -21,7 +24,8 @@ class Feeditem:
                 count += 1
                 if(count < len(tag_ids) ):
                     sqlConds+= ' AND '
-            sql = '''SELECT * from feeditem WHERE id IN (SELECT DISTINCT item_tag.feeditem_id FROM feeditem_tag item_tag WHERE %s)''' %(sqlConds)
+            sql = '''SELECT * from feeditem WHERE `date` >=  '%s' AND `date` <= '%s' AND id IN (SELECT DISTINCT item_tag.feeditem_id FROM feeditem_tag item_tag WHERE %s)''' %(time1, time2, sqlConds)
+            print sql
             c.execute(sql)
 
             feeditems = c.fetchall()
