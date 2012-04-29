@@ -3,13 +3,23 @@
         <title>Topical Trending</title>
         {% load static %}
         <LINK href="{% get_static_prefix %}general.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script type="text/javascript" src="{% get_static_prefix %}topics.js"></script>
     </head>
 
     <body>
         <div class="master frontPage">
             <div class="pane0">
-                {% if freqTopics %}
-                    <p> Hot Trends:</p>
+
+                    <p> Hot Trends for <select class="sort">
+			           <option value ="today">Today</option>
+				   <option value = "yesterday">Yesterday</option>
+				   <option value = "lastweek">Last Week</option>
+				  <option value= "lastmonth">Last Month</option>
+				  </select></p>
+		
+		   <div id="freqtopics">
+		   {% if freqTopics %}
 
                     {% for topic in freqTopics %}
                         <div>
@@ -17,12 +27,14 @@
                             <hr>
                         </div>
                     {% endfor %}
-
                 {% else %}
                     <p><strong>No hot trends to show</strong></p>
                 {% endif %}
+		</div>
+		</div>
+
                 
-            </div>
+            
             <div class="pane1">     
                 <form action="/ui/" method="GET">{% csrf_token %}
                 {{ form.as_p }}

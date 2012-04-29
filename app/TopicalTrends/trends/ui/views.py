@@ -16,7 +16,8 @@ import copy
 
 class searchForm(forms.Form):
     input = forms.CharField()
-
+    
+            
 # Create your views here.
 def index(request):
     freqTopicSets = ''
@@ -25,7 +26,7 @@ def index(request):
 
 
     time2 = datetime.datetime.now() 
-    time1 = time2 - timedelta(days=3)
+    time1 = time2 - timedelta(days=0)
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     #pdb.set_trace() how to do debugging
 
@@ -70,3 +71,25 @@ def index(request):
         qeury = None
     return render_to_response('ui/index.html', {'form' : form, 'freqTopicSets':freqTopicSets, 'query':
 query, 'freqTopics':freqTopics, 'linkSets':linkSets, 'topicSet_linkSets':topicSet_linkSets })
+
+#This gets all the hot topics
+#This action is called via an Ajax toggle of the hot trends list
+def topics(request):
+    output = ''
+    if (request.GET.has_key('sort')):
+          freqTopics = ''
+          output = request.GET['sort']
+          time_diff = None      #The time difference
+          if output == 'yesterday':
+              time_diff = 1
+          elif output == 'lastweek':
+              time_diff = 7
+          elif output == 'today':
+              time_diff = 0
+          else:
+              time_diff = 30
+          time2 = datetime.datetime.now() 
+          time1 = time2 - timedelta(days=time_diff)
+    freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
+    
+    return render_to_response('ui/topics.html', {'freqTopics' : freqTopics})

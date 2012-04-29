@@ -5,4 +5,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^ui/$', 'ui.views.index'),
+    url(r'^ui/topics$', 'ui.views.topics')
 )
