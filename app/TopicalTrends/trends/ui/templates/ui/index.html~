@@ -18,9 +18,8 @@
 				  <option value= "lastmonth">Last Month</option>
 				  </select></p>
 		
-		   <div id="freqtopics">
 		   {% if freqTopics %}
-
+                     <div id="freqtopics">
                     {% for topic in freqTopics %}
                         <div>
 							<a href='http://127.0.0.1:8000/ui/?input={{ topic.0 }}'>{{topic}}</a>
@@ -30,7 +29,6 @@
                 {% else %}
                     <p><strong>No hot trends to show</strong></p>
                 {% endif %}
-		</div>
 		</div>
 
                 
