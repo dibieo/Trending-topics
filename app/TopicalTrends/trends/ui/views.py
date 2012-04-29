@@ -14,6 +14,7 @@ from tag import Tag
 import pdb
 import copy
 import urllib
+from MyConf import MyConf as params
 
 class searchForm(forms.Form):
     input = forms.CharField()
@@ -27,7 +28,7 @@ def index(request):
 
 
     time2 = datetime.datetime.now() 
-    time1 = time2 - timedelta(days=0)
+    time1 = time2 - timedelta(days=params.days)
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     #pdb.set_trace() how to do debugging
 
@@ -59,7 +60,7 @@ def index(request):
                 feeditems = feeditem.Feeditem.findByTags(tag_ids, time1, time2)
                 for item in feeditems:
                     print item[1]
-                    t1 = unicode(unicode(item[1],'utf-8', errors='ignore'))
+                    t1 = unicode(unicode(item[1],'utf-8', errors='ignore')) # to ignore non utf-8 chars 
                     t2 = unicode(item[3])
 
                     links.append((t1,t2))
@@ -82,19 +83,19 @@ query, 'freqTopics':freqTopics, 'linkSets':linkSets, 'topicSet_linkSets':topicSe
 def topics(request):
     output = ''
     if (request.GET.has_key('sort')):
-          freqTopics = ''
-          output = request.GET['sort']
-          time_diff = None      #The time difference
-          if output == 'yesterday':
-              time_diff = 1
-          elif output == 'lastweek':
-              time_diff = 7
-          elif output == 'today':
-              time_diff = 0
-          else:
-              time_diff = 30
-          time2 = datetime.datetime.now() 
-          time1 = time2 - timedelta(days=time_diff)
+        freqTopics = ''
+        output = request.GET['sort']
+        time_diff = None      #The time difference
+        if output == 'yesterday':
+            time_diff = 1
+        elif output == 'lastweek':
+            time_diff = 7
+        elif output == 'today':
+            time_diff = 0
+        else:
+            time_diff = 30
+        time2 = datetime.datetime.now() 
+        time1 = time2 - timedelta(days=time_diff)
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     
     return render_to_response('ui/topics.html', {'freqTopics' : freqTopics})
