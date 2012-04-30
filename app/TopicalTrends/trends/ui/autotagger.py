@@ -7,6 +7,21 @@ from DBConf import DBConf as dbc
 from MyConf import MyConf as params
 from MLStripper import strip_tags
 from TimeoutException import timeout
+import re
+import pdb
+
+
+#the stop regex pattern list works like this:
+# [(<'the rss feed1's base url'>),('stopPattern1 | stopPattern2 | ... '),
+# (<'the rss feed2's base url'>),('stopPattern2),
+# put more rss feeds and stop words here]
+#what it does is when tagging feed items from a feed, it ignores certain words that occur in that feed a lot and might throw off our frequent items and itemsets
+#note: for a more general filter see filterTitleDescription below
+stopLists = [
+(('news.cnet.com'),('(c|C)net')),
+(('feeds.reuters.com'),('(r|R)euters')),
+(('feeds.technologyreview.com'),('(t|T)r35')),
+(('bbc.co'),('bbc|BBC'))]
 
 @timeout(params.timeout, None)  # timeout this function if it takes more than params.timeout
 def wikify(url):
@@ -19,14 +34,27 @@ def insert_feeditem_tags(feeditem_id):
     #get feed_item from our db, get title and description of item and use it as text to be wikified
     conn = mdb.connect(dbc.host, dbc.user, dbc.passwrd, dbc.db, charset="utf8")
     c = conn.cursor()
-    c.execute("""SELECT title, description FROM feeditem
+    c.execute("""SELECT title, description, link FROM feeditem
                       WHERE id = %s """, int(feeditem_id),)
     row = c.fetchone()
-    item_title = row[0]
-    item_desc = row[1]
-    textToWikify = strip_tags(item_title) + ' ' + strip_tags(item_desc)
-    textToWikify = urllib.quote_plus(textToWikify.encode('utf-8'))  # replace special chars is string using %xx scape
-    
+    item_title = strip_tags(row[0])
+    item_desc = strip_tags(row[1])
+    item_url = row[2]
+    textToWikify = filterTitleDescription(item_title, item_desc)
+    textToWikify = urllib.quote_plus(textToWikify.encode('utf-8'))  # replace special chars in string using %xx escape
+
+    #remove stop words for this feed from text to be wikfied, usually feed specific stopwords are those that are repeated a lot in some feed, like the name of a news agency in its own articles
+    for stopList in stopLists:
+        if(item_url.lower() in stopList[0].lower()): #if the base url of feed is in feed item url, ie ths item belongs to that feed
+            print('textToWikify before:')
+            print(textToWikify)
+            textToWikify = re.sub(stopList[1], '', textToWikify)
+            
+            print('textToWikify after:')
+            print(textToWikify)
+
+            
+            
     #call wikify
     url = params.baseUrl + 'wikify?minProbability=' + params.minProbability + '&repeatMode=' + params.repeatMode + '&source=' + textToWikify
     
@@ -169,6 +197,42 @@ def getFileTopics(filePath):
         text = text + line
         
     getSortedPairwiseRelatednesses(text)
+
+
+#a rule based filter, for example if the frist 5 words of the description contian 'Reuters'
+
+#note: this general filter applies to things that the feed specific stopWordList (look above) doesn't catch. for example reuter is mentioned the beginning of descriptions of items in yahoo news and other feeds (not just reuter itself, when reuter is mentioned in the descriptions of reuter's rss feeds the stop word list catches those)
+ 
+# give it title and description, it will filter, concatenate and return them
+def filterTitleDescription(title, description):
+    
+    #filtering the description
+    count = 1;
+    filteredDesc = ' '  
+    for word in description.split():        
+        #eliminate reuter as source mentions at the beginning of descriptions
+        if(count <= 10):
+            word = re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', word)
+        
+        filteredDesc = filteredDesc + word +' '
+        count+=1
+    
+    count = 1;
+    filteredTitle = ''
+    for word in title.split():        
+        #eliminate reuter as source mentions at the beginning of descriptions
+        if(count <= 10):
+            word = re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', word)
+        
+        filteredTitle = filteredTitle + word +' '
+        count+=1
+        
+    return filteredTitle + ' ' + filteredDesc #no filtering on title right now
+        
+    
+
+
+
     
 #here's how this method works:
 #what's passed in is a list of topics compared pairwise and sorted based on the relatedness of the topic pairs

@@ -1,6 +1,0 @@
-*.pyc
-app/TopicalTrends/trends/trends/settings.py
-app/TopicalTrends/trends/ui/DBConf.py
-app/TopicalTrends/trends/.metadata/
-app/TopicalTrends/trends/ui/.metadata/
-settings.py

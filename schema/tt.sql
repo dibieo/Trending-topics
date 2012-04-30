@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 21, 2012 at 11:20 AM
--- Server version: 5.1.61
+-- Generation Time: Apr 29, 2012 at 10:56 PM
+-- Server version: 5.1.62
 -- PHP Version: 5.3.6-13ubuntu3.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `feed` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'insertion date',
   PRIMARY KEY (`id`),
   UNIQUE KEY `link_hash` (`link_hash`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=183 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1402 ;
 
 -- --------------------------------------------------------
 
@@ -52,15 +52,17 @@ CREATE TABLE IF NOT EXISTS `feeditem` (
   `title` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `link` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `link_hash` varchar(128) NOT NULL COMMENT 'hash of link on which a unique index is defined',
   `guid` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `hash` varchar(128) NOT NULL COMMENT 'hash of guid if available or link on which a unique index is defined',
+  `title_hash` varchar(128) NOT NULL COMMENT 'hash of the feeditem''s title on which a unique index is defined',
   `pub_date` text,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'insertion date',
   `feed_id` int(11) NOT NULL,
   PRIMARY KEY (`id`,`feed_id`),
-  UNIQUE KEY `guid_hash` (`hash`),
+  UNIQUE KEY `guid_hash` (`title_hash`),
+  UNIQUE KEY `link_hash` (`link_hash`),
   KEY `feed_id` (`feed_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3538 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6052 ;
 
 -- --------------------------------------------------------
 
@@ -77,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `feeditem_tag` (
   PRIMARY KEY (`id`),
   KEY `feeditem_id` (`feeditem_id`),
   KEY `tag_id` (`tag_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16745 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25349 ;
 
 -- --------------------------------------------------------
 
@@ -109,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'insertion date',
   `id_miner` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4862 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10143 ;
 
 --
 -- Constraints for dumped tables

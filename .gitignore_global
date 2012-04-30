@@ -1,0 +1,6 @@
+*.pyc
+settings.py
+DBConf.py
+.metadata/
+
+

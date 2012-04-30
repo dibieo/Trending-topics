@@ -90,6 +90,7 @@ class Analysis(object):
     def getFreqTopicSets(query, time1, time2,  minSup=params.maxAllowedSupport, maximal=True): # len is ignored for now
         ''' Returns frequent topic sets containing the query and having a length of len
             and a support value of greater than minSup3
+            note: time1 < time2
             
             output: list of tuples: [([topic1, topic2, ... ],Freq), ...]
         '''

@@ -5,10 +5,10 @@ Created on Mar 31, 2012
 '''
 
 class DBConf:
-    
     # SQL connection info
-    host = 'localhost'   
+
+    host = 'localhost'
     user = 'tt'
     passwrd = 'tt123'
     db = 'tt'
-    
+

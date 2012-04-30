@@ -10,6 +10,7 @@ from TimeoutException import  timeout
 def parseUrl(url):
     return feedparser.parse(url)
 
+
 #This function inserts items into the feed item table
 def insert_feeditems(feed_id, url):   
     
