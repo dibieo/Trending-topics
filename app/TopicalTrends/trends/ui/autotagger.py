@@ -205,7 +205,7 @@ def getFileTopics(filePath):
  
 # give it title and description, it will filter, concatenate and return them
 def filterTitleDescription(title, description):
-    
+    '''
     #filtering the description
     count = 1;
     filteredDesc = ' '  
@@ -224,10 +224,10 @@ def filterTitleDescription(title, description):
         if(count <= 10):
             word = re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', word)
         
-        filteredTitle = filteredTitle + word +' '
+        filteredTitle = filteredTitle + word + ' '
         count+=1
-        
-    return filteredTitle + ' ' + filteredDesc #no filtering on title right now
+    '''    
+    return re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', title) + ' ' + re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', description) #no filtering on title right now
         
     
 

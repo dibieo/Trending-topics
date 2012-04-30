@@ -43,8 +43,7 @@ try:
 
     con.commit()
     con.close()
-    print "\nNew feeds inserted into database source table (repeated links were ignored) ..."
-    print "Total: %s" % linkCount
+    print "\n%s eeds inserted into database source table (repeated links were ignored.)" % linkCount
 except RuntimeError as error:
     print error
 
