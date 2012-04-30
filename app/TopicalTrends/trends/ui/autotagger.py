@@ -18,9 +18,9 @@ import pdb
 #what it does is when tagging feed items from a feed, it ignores certain words that occur in that feed a lot and might throw off our frequent items and itemsets
 #note: for a more general filter see filterTitleDescription below
 stopLists = [
-('news.cnet.com'),('(c|C)net'),
+(('news.cnet.com'),('(c|C)net')),
 (('feeds.reuters.com'),('(r|R)euters')),
-(('feeds.technologyreview.com'),('(t|T)r35'),
+(('feeds.technologyreview.com'),('(t|T)r35')),
 (('bbc.co'),('bbc|BBC'))
 ]
 
@@ -213,7 +213,7 @@ def filterTitleDescription(title, description):
     for word in description.split():        
         #eliminate reuter as source mentions at the beginning of descriptions
         if(count <= 5):
-            word = re.sub('(R|r)euters | (C|c)net | bbc | BBC', word)
+            word = re.sub('(R|r)euters | (C|c)net | bbc | BBC',     '', word)
         
         filteredDesc = filteredDesc + word +' '
         count+=1

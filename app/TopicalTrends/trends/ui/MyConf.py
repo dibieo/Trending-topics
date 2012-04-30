@@ -14,7 +14,7 @@ class MyConf:
 
     #baseUrl = "http://wikipedia-miner.cms.waikato.ac.nz/services/"
     # Wikiminer parameters
-    baseUrl = 'http://ec2-50-112-73-48.us-west-2.compute.amazonaws.com:8080/wikiminer/services/'
+    baseUrl = 'http://ec2-50-112-22-24.us-west-2.compute.amazonaws.com:8080/wikiminer/services/'
     minProbability = '0.1'
     repeatMode = 'ALL' #FIRST_IN_REGION
     
