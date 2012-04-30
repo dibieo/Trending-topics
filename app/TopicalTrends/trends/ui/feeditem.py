@@ -25,7 +25,6 @@ class Feeditem:
                 if(count < len(tag_ids) ):
                     sqlConds+= ' AND '
             sql = '''SELECT * from feeditem WHERE `date` >=  '%s' AND `date` <= '%s' AND id IN (SELECT DISTINCT item_tag.feeditem_id FROM feeditem_tag item_tag WHERE %s)''' %(time1, time2, sqlConds)
-            print sql
             c.execute(sql)
 
             feeditems = c.fetchall()

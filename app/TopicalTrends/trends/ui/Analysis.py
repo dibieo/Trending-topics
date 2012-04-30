@@ -144,7 +144,7 @@ class Analysis(object):
             sup -= 1          
         
         return freqTopicSets
-    
+     
     @staticmethod
     def getHotTopics(k, time1, time2):
         '''
@@ -175,7 +175,7 @@ class Analysis(object):
     
     @staticmethod
     def getTopicFrequency(topic, time1, time2):
-        '''
+        ''' 
             Returns the number of occurrences (frequency) of topic
             using feeditems stored from time1 to time2
             
@@ -200,7 +200,7 @@ class Analysis(object):
                 db.close()
         freq = rows[0][0]
         return freq
-    @staticmethod 
+    @staticmethod  
     def getTopicsFrequencyChanges(topics, time1, time2):
         '''
             Returns the changes of frequencies for input topics
@@ -210,9 +210,10 @@ class Analysis(object):
             output: [('topic1', <changes on frequency 1>), ('topic2', <changes on frequency 2>), ...]
         '''
         results = []
+        append = results.append
         for t in topics:
             topic = t[0]
-            oldFreq = t[1]
-            newFreq = Analysis.getTopicFrequency(topic, time1, time2)
-            results.append((topic,str(newFreq-oldFreq)))
+            newFreq = t[1]
+            oldFreq = Analysis.getTopicFrequency(topic, time1, time2)
+            append((topic,int(newFreq)-int(oldFreq)))
         return results

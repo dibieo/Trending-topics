@@ -27,39 +27,52 @@ def insert_feeditems(feed_id, url):
             conn = mdb.connect(dbc.host, dbc.user, dbc.passwrd, dbc.db, charset="utf8")
             c = conn.cursor()
             link = ''
+            linkHash = ''
             guid = ''
-            hash = ''
-            
-            if 'guid' in f:
-                guid = f.guid
+            titleHash = ''
+            title = ''
+            description = ''
+            pubDate = ''
                               
             if 'title' in f:
-                unique = f.title  # the hash of this string is considered a unique value for each feed
-                if len(unique) > 0:
+                title = f.title  # the hash of this string is considered a unique value for each feed
+                if len(title) > 0:
                     h = hashlib.sha512()
-                    h.update(str(unique))
-                    hash = h.hexdigest()
-            if len(hash) > 0:
-                if 'link' in f and 'title' in f and 'description'in f:
+                    h.update(str(title))
+                    titleHash = h.hexdigest()
+            if 'link' in f:  
+                link = f.link   
+                if len(link) > 0:
+                    h = hashlib.sha512()
+                    h.update(str(link))
+                    linkHash = h.hexdigest()
+            if len(titleHash) > 0 and len(linkHash) > 0:
+                if 'title' in f and 'description'in f:
+                    title = f.title.encode('utf-8')
+                    description = f.description.encode('utf-8')                    
                     pubDate = ''
                     if 'published' in f:    # the value of pubDate tag within each feed
-                        pubDate = f.published
+                        pubDate = f.published.encode('utf-8') 
+                    if 'guid' in f:
+                        guid = f.guid
                     try:
-                        c.execute('SELECT id FROM feeditem WHERE hash = %s', (hash))
+                        c.execute('SELECT id FROM feeditem WHERE title_hash = %s or link_hash = %s', (titleHash, linkHash))
                         if len(c.fetchall()) == 0:
                             c.execute("""INSERT feeditem (title,
                                                             description,
                                                             link,
+                                                            link_hash,
                                                             guid,
-                                                            hash,
+                                                            title_hash,
                                                             pub_date,                                            
                                                             feed_id)
-                                     VALUES (%s, %s, %s, %s, %s, %s, %s)""",
-                                                           (f.title,
-                                                            f.description,
-                                                            f.link,
+                                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                                                           (title,
+                                                            description,
+                                                            link,
+                                                            linkHash,
                                                             guid,
-                                                            hash,
+                                                            titleHash,
                                                             pubDate,
                                                             feed_id,) #soheilTODO replace datetime.now (not sure which one) with pub_date 
                                                            )

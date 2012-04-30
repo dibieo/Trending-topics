@@ -6,7 +6,7 @@ $(document).ready(function() {
  
 $(".sort").change(function() {
 var input = $(this).val();
-$("#freqtopics").html("<div>loading</div>");
+$("#freqtopics").html("<div>Loading ...</div>");
 $.get("/ui/topics?sort=" + input, function(data){
   $("#freqtopics").html(data);
 });

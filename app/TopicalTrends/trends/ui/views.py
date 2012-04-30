@@ -30,6 +30,9 @@ def index(request):
     time2 = datetime.datetime.now() 
     time1 = time2 - timedelta(days=params.days)
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
+    time22 = time1
+    time11 = time22 - timedelta(days=2*params.days) # to be used to find the old frequencies of current hot topics
+    freqTopics = Analysis.getTopicsFrequencyChanges(freqTopics, time11, time22) # find trendings for freq topic sets
     #pdb.set_trace() how to do debugging
 
     #if request.method == 'GET' : # If form is submitted
@@ -86,16 +89,20 @@ def topics(request):
         freqTopics = ''
         output = request.GET['sort']
         time_diff = None      #The time difference
-        if output == 'yesterday':
+        if output == 'today':
             time_diff = 1
         elif output == 'lastweek':
             time_diff = 7
-        elif output == 'today':
-            time_diff = 0
         else:
             time_diff = 30
-        time2 = datetime.datetime.now() 
+        time2 = datetime.datetime.now()
         time1 = time2 - timedelta(days=time_diff)
-    freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
-    
+    freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=params.maxFreqTopics)
+    time22 = time1
+    time11 = time22 - timedelta(days=time_diff) # to be used to find the old frequencies of current hot topics
+    print time1
+    print time2
+    print time11
+    print time22    
+    freqTopics = Analysis.getTopicsFrequencyChanges(freqTopics, time11, time22) # find trendings for freq topic sets
     return render_to_response('ui/topics.html', {'freqTopics' : freqTopics})

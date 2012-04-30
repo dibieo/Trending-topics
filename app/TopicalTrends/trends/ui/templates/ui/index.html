@@ -14,7 +14,6 @@
 
                     <p> Hot Trends for <select class="sort">
 			           <option value ="today">Today</option>
-				   <option value = "yesterday">Yesterday</option>
 				   <option value = "lastweek">Last Week</option>
 				  <option value= "lastmonth">Last Month</option>
 				  </select></p>
@@ -33,8 +32,6 @@
                 {% endif %}
 		</div>
 		</div>
-
-                
             
             <div class="pane1">     
                 <form action="/ui/" method="GET">{% csrf_token %}

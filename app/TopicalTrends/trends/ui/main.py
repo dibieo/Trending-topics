@@ -14,16 +14,16 @@ if __name__ == '__main__':
     pass
 
 #print report
-query = 'Google'
+query = 'Reuters'
 #time1 = '2012-04-20 00:00:00'
 #time2 = '2013-04-25 08:00:00'
 #time11 = '2012-04-25 08:00:00'
 #time22 = '2013-04-30 00:00:00'
 
 time2 = datetime.datetime.now() 
-time1 = time2 - timedelta(days=1)
-time22 = time2 - timedelta(days=2)
-time11 = time22 - timedelta(days=3)
+time1 = time2 - timedelta(days=20)
+time22 = time1
+time11 = time22 - timedelta(days=20)
 
 print 'getFreqTopics:'
 print Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
