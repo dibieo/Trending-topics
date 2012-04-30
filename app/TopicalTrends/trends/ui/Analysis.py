@@ -87,9 +87,10 @@ class Analysis(object):
         return out
             
     @staticmethod
-    def getFreqTopicSets(query, minSup=params.maxAllowedSupport, maximal=True): # len is ignored for now
+    def getFreqTopicSets(query, time1, time2,  minSup=params.maxAllowedSupport, maximal=True): # len is ignored for now
         ''' Returns frequent topic sets containing the query and having a length of len
             and a support value of greater than minSup3
+            note: time1 < time2
             
             output: list of tuples: [([topic1, topic2, ... ],Freq), ...]
         '''
@@ -104,22 +105,22 @@ class Analysis(object):
                                      dbc.passwrd,
                                      dbc.db)
                 c = db.cursor()
-				#Question By Soheil (for Houman): does this query return the set of all tags that co-occur with the query tag but not the query tag itself, along with the id of the feed item that contains that tag?( if so then let's leave the comment cuz i might not remember in the future :) april.24
+                #Question By Soheil (for Houman): does this query return the set of all tags that co-occur with the query tag but not the query tag itself, along with the id of the feed item that contains that tag?( if so then let's leave the comment cuz i might not remember in the future :) april.24
                 c.execute('''SELECT fit.feeditem_id, t.title 
                            FROM `feeditem_tag` fit 
                            INNER JOIN `tag` t ON fit.tag_id = t.id 
                            WHERE t.title != %s AND fit.feeditem_id 
                            IN (SELECT fit.feeditem_id 
                                FROM `feeditem_tag` fit 
-                               INNER JOIN `tag` t ON fit.tag_id = t.id 
-                               WHERE t.title = %s) 
-                           ORDER BY feeditem_id ASC''', (query, query))
+                               INNER JOIN `tag` t ON fit.tag_id = t.id
+                               WHERE fit.`date` >=  %s AND fit.`date` <= %s AND 
+                               t.title = %s) 
+                           ORDER BY feeditem_id ASC''', (query, time1, time2, query))
                 rows = c.fetchall()
                 feeditemTopics = ()
                 topicSet = ()
-                feeditemID = ''
-				
-				#soheil:making sets of tags that represent a feed item? (note: if this ever becomes an efficiency bottleneck, consider replacing this loop with a GROUP BY feeditem_id in the above sql query)
+                feeditemID = ''				
+                #soheil:making sets of tags that represent a feed item? (note: if this ever becomes an efficiency bottleneck, consider replacing this loop with a GROUP BY feeditem_id in the above sql query)
                 for r in rows:
                     if feeditemID == r[0]:
                         topicSet += (r[1],)
@@ -134,8 +135,8 @@ class Analysis(object):
                     db.commit()
                     c.close()
                     db.close()
-            relimInput = itemmining.get_sam_input(feeditemTopics)
-            freqTopicSets = itemmining.sam(relimInput, sup)    # find freq topic sets
+            relimInput = itemmining.get_fptree(feeditemTopics)
+            freqTopicSets = itemmining.fpgrowth(relimInput, sup)    # find freq topic sets
             freqTopicSets = MyUtilities.sortDicByKeyLen(freqTopicSets) # sort the freq topic sets by frequency and change the data structure
             freqTopicSets = Analysis.convetFrozensetToList(freqTopicSets) # convert the data structure of freq topic sets so they become process friendly
             if maximal:  # ignore non-maximal freq topic sets and return only maximal ones

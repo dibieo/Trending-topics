@@ -6,6 +6,7 @@ Created on Mar 31, 2012
 
 class DBConf:
     # SQL connection info
+
     host = 'localhost'
     user = 'root'
     passwrd = ''

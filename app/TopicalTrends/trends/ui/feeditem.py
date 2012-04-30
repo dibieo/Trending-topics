@@ -9,7 +9,10 @@ class Feeditem:
     ''' returns feed items that contain all the tags in "tag_ids" '''
     #TODO add time span
     @staticmethod
-    def findByTags(tag_ids):
+    def findByTags(tag_ids, time1, time2):
+        '''
+            finds feeditems containing tags with tag_ids ids whose date are between time1 and time2 (time1 < time2)
+        '''
         try:
             db = mdb.Connect(dbc.host, dbc.user, dbc.passwrd, dbc.db)
             c = db.cursor()
@@ -42,8 +45,9 @@ class Feeditem:
             whereClause2 = whereClause2[0:-4]
             
             #sql = "SELECT * FROM feeditem WHERE feeditem.id IN (SELECT ft1.feeditem_id FROM"+ +fromClause+" WHERE "+whereClause1+whereClause2+")"
-            sql = '''SELECT * FROM feeditem WHERE feeditem.id IN (SELECT ft0.feeditem_id FROM %s WHERE %s %s)''' %(fromClause, whereClause1, whereClause2)
+            sql = '''SELECT * FROM feeditem WHERE feeditem.id IN (SELECT ft0.feeditem_id FROM %s WHERE %s %s AND feeditem.`date` >=  '%s' AND feeditem.`date` <= '%s' ) ''' %(fromClause, whereClause1, whereClause2, time1, time2)
             
+          #this is obsolete, keep around for abit then delete, soheil april 29
           # count = 0
           # sqlConds = ''
           # for tag_id in tag_ids:
@@ -52,6 +56,8 @@ class Feeditem:
           #     if(count < len(tag_ids) ):
           #         sqlConds+= ' AND '
           #sql = '''SELECT * from feeditem WHERE id IN (SELECT DISTINCT item_tag.feeditem_id FROM feeditem_tag item_tag WHERE %s)''' %(sqlConds)
+
+
             c.execute(sql)
 
             feeditems = c.fetchall()

@@ -1,10 +1,7 @@
 *.pyc
-<<<<<<< HEAD
-<<<<<<< HEAD
-settings.py
-=======
 
->>>>>>> 686f5e7bfc587c15e89c2760b7b3ce4c5a27c4a5
-=======
-settings.py
->>>>>>> 7628ce5d5e916122c308b4b6a5dd231fd601c7d0
+app/TopicalTrends/trends/trends/settings.py
+app/TopicalTrends/trends/ui/DBConf.py
+app/TopicalTrends/trends/.metadata/
+app/TopicalTrends/trends/ui/.metadata/
+

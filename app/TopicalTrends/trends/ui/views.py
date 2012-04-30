@@ -13,6 +13,8 @@ import feeditem
 from tag import Tag
 import pdb
 import copy
+import urllib
+from MyConf import MyConf as params
 
 class searchForm(forms.Form):
     input = forms.CharField()
@@ -26,10 +28,12 @@ def index(request):
 
 
     time2 = datetime.datetime.now() 
+
     time1 = time2 - timedelta(days=1)
     
     print('timing: before freqTopics')
     print(datetime.datetime.now())
+
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     print('timing: after freqTopics')
     print(datetime.datetime.now())
@@ -42,11 +46,13 @@ def index(request):
     topicSet_linkSets = []
     if form.is_valid():        
         if(request.GET.has_key('input')):
+
             print('timing: before getFreqTopicSets')
             print(datetime.datetime.now())
-            freqTopicSets = Analysis.getFreqTopicSets(request.GET['input']) 
+            freqTopicSets = Analysis.getFreqTopicSets(request.GET['input'], time1, time2) 
             print('timing: after getFreqTopicSets')
             print(datetime.datetime.now())
+
    
             for topicSet in freqTopicSets:
                 tag_ids = []
@@ -65,12 +71,18 @@ def index(request):
                 print("in views.py:")
                 print(topicSet)
                 #pdb.set_trace()
+                
                 print('====')
                 print(datetime.datetime.now())
-                feeditems = feeditem.Feeditem.findByTags(tag_ids)
+                feeditems = feeditem.Feeditem.findByTags(tag_ids, time1, time2)
                 print(datetime.datetime.now())
+
                 for item in feeditems:
-                    links.append((item[1],item[3]))
+                    print item[1]
+                    t1 = unicode(unicode(item[1],'utf-8', errors='ignore')) # to ignore non utf-8 chars 
+                    t2 = unicode(item[3])
+
+                    links.append((t1,t2))
                 linkSets.append(copy.copy(links))
                 
                 topicSet_linkSets = zip(freqTopicSets, linkSets)
@@ -90,19 +102,19 @@ query, 'freqTopics':freqTopics, 'linkSets':linkSets, 'topicSet_linkSets':topicSe
 def topics(request):
     output = ''
     if (request.GET.has_key('sort')):
-          freqTopics = ''
-          output = request.GET['sort']
-          time_diff = None      #The time difference
-          if output == 'yesterday':
-              time_diff = 1
-          elif output == 'lastweek':
-              time_diff = 7
-          elif output == 'today':
-              time_diff = 0
-          else:
-              time_diff = 30
-          time2 = datetime.datetime.now() 
-          time1 = time2 - timedelta(days=time_diff)
+        freqTopics = ''
+        output = request.GET['sort']
+        time_diff = None      #The time difference
+        if output == 'yesterday':
+            time_diff = 1
+        elif output == 'lastweek':
+            time_diff = 7
+        elif output == 'today':
+            time_diff = 0
+        else:
+            time_diff = 30
+        time2 = datetime.datetime.now() 
+        time1 = time2 - timedelta(days=time_diff)
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
     
     return render_to_response('ui/topics.html', {'freqTopics' : freqTopics})
