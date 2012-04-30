@@ -20,7 +20,8 @@ import pdb
 stopLists = [
 ('news.cnet.com'),('(c|C)net'),
 (('feeds.reuters.com'),('(r|R)euters')),
-(('feeds.technologyreview.com'),('(t|T)r35'))
+(('feeds.technologyreview.com'),('(t|T)r35'),
+(('bbc.co'),('bbc|BBC'))
 ]
 
 @timeout(params.timeout, None)  # timeout this function if it takes more than params.timeout
@@ -212,7 +213,7 @@ def filterTitleDescription(title, description):
     for word in description.split():        
         #eliminate reuter as source mentions at the beginning of descriptions
         if(count <= 5):
-            word = re.sub('(R|r)euters|(C|c)net', '', word)
+            word = re.sub('(R|r)euters | (C|c)net | bbc | BBC', word)
         
         filteredDesc = filteredDesc + word +' '
         count+=1

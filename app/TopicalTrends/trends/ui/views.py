@@ -26,9 +26,14 @@ def index(request):
 
 
     time2 = datetime.datetime.now() 
-    time1 = time2 - timedelta(days=0)
+    time1 = time2 - timedelta(days=1)
+    
+    print('timing: before freqTopics')
+    print(datetime.datetime.now())
     freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
-    #pdb.set_trace() how to do debugging
+    print('timing: after freqTopics')
+    print(datetime.datetime.now())
+    
 
     #if request.method == 'GET' : # If form is submitted
     form = searchForm(request.GET)
@@ -37,7 +42,11 @@ def index(request):
     topicSet_linkSets = []
     if form.is_valid():        
         if(request.GET.has_key('input')):
+            print('timing: before getFreqTopicSets')
+            print(datetime.datetime.now())
             freqTopicSets = Analysis.getFreqTopicSets(request.GET['input']) 
+            print('timing: after getFreqTopicSets')
+            print(datetime.datetime.now())
    
             for topicSet in freqTopicSets:
                 tag_ids = []
@@ -53,9 +62,13 @@ def index(request):
                     tag_id = str(tag_id).strip('L') #seems like we get id's like '3167L' strip the L
                     tag_ids.append(tag_id)
             
+                print("in views.py:")
                 print(topicSet)
                 #pdb.set_trace()
+                print('====')
+                print(datetime.datetime.now())
                 feeditems = feeditem.Feeditem.findByTags(tag_ids)
+                print(datetime.datetime.now())
                 for item in feeditems:
                     links.append((item[1],item[3]))
                 linkSets.append(copy.copy(links))
@@ -70,7 +83,7 @@ def index(request):
     else:
         qeury = None
     return render_to_response('ui/index.html', {'form' : form, 'freqTopicSets':freqTopicSets, 'query':
-query, 'freqTopics':freqTopics, 'linkSets':linkSets, 'topicSet_linkSets':topicSet_linkSets })
+query, 'freqTopics':freqTopics, 'linkSets':linkSets, 'topicSet_linkSets':topicSet_linkSets[::-1] })
 
 #This gets all the hot topics
 #This action is called via an Ajax toggle of the hot trends list
