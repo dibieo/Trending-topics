@@ -135,8 +135,8 @@ class Analysis(object):
                     db.commit()
                     c.close()
                     db.close()
-            relimInput = itemmining.get_fptree(feeditemTopics)
-            freqTopicSets = itemmining.fpgrowth(relimInput, sup)    # find freq topic sets
+            relimInput = itemmining.get_relim_input(feeditemTopics)
+            freqTopicSets = itemmining.relim(relimInput, sup)    # find freq topic sets
             freqTopicSets = MyUtilities.sortDicByKeyLen(freqTopicSets) # sort the freq topic sets by frequency and change the data structure
             freqTopicSets = Analysis.convetFrozensetToList(freqTopicSets) # convert the data structure of freq topic sets so they become process friendly
             if maximal:  # ignore non-maximal freq topic sets and return only maximal ones

@@ -53,19 +53,18 @@ def index(request):
     if form.is_valid():        
         if(request.GET.has_key('input')):
 
-            print('timing: before getFreqTopicSets')
-            print(datetime.datetime.now())
+            #print('timing: before getFreqTopicSets')
+            #print(datetime.datetime.now())
             freqTopicSets = Analysis.getFreqTopicSets(request.GET['input'], time1, time2) 
-            print('timing: after getFreqTopicSets')
-            print(datetime.datetime.now())
-
+            #print('timing: after getFreqTopicSets')
+            #print(datetime.datetime.now())
    
             for topicSet in freqTopicSets:
                 tag_ids = []
                 links = []
                 #cuz example topicSet for a query like Microsoft  = (['Blog', 'Android'], 4) so make into ['Blog', 'Android', 'Microsoft']
                 topics = topicSet[0]
-                topics.append(request.GET['input'])
+                topics.append(str(request.GET['input']))
                 
                 for topic in topics: 
                     tag = Tag.findByTitle(topic) #findByTitle returns multiple rows representing multiple tags, so the last [0][0] means get the first attribute (ie id) or the first tag in rows
@@ -74,14 +73,14 @@ def index(request):
                     tag_id = str(tag_id).strip('L') #seems like we get id's like '3167L' strip the L
                     tag_ids.append(tag_id)
             
-                print("in views.py:")
+                #print("in views.py:")
                 print(topicSet)
                 #pdb.set_trace()
                 
-                print('====')
-                print(datetime.datetime.now())
+                #print('====')
+                #print(datetime.datetime.now())
                 feeditems = feeditem.Feeditem.findByTags(tag_ids, time1, time2)
-                print(datetime.datetime.now())
+                #print(datetime.datetime.now())
 
                 for item in feeditems:
                     print item[1]

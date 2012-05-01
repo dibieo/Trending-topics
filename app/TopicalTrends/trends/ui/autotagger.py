@@ -43,21 +43,21 @@ def insert_feeditem_tags(feeditem_id):
     textToWikify = filterTitleDescription(item_title, item_desc)
     textToWikify = urllib.quote_plus(textToWikify.encode('utf-8'))  # replace special chars in string using %xx escape
 
+    '''
     #remove stop words for this feed from text to be wikfied, usually feed specific stopwords are those that are repeated a lot in some feed, like the name of a news agency in its own articles
     for stopList in stopLists:
-        if(item_url.lower() in stopList[0].lower()): #if the base url of feed is in feed item url, ie ths item belongs to that feed
+        if(item_url.lower() in stopList[0].lower()): #if the base url of feed is in feed item url, ie this item belongs to that feed
             print('textToWikify before:')
             print(textToWikify)
             textToWikify = re.sub(stopList[1], '', textToWikify)
             
             print('textToWikify after:')
             print(textToWikify)
-
+    '''
             
             
     #call wikify
     url = params.baseUrl + 'wikify?minProbability=' + params.minProbability + '&repeatMode=' + params.repeatMode + '&source=' + textToWikify
-    
     #if not isinstance(url,unicode):
     url = url.encode('utf8')
 
@@ -227,7 +227,7 @@ def filterTitleDescription(title, description):
         filteredTitle = filteredTitle + word + ' '
         count+=1
     '''    
-    return re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', title) + ' ' + re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', description) #no filtering on title right now
+    return re.sub('(R|r)euters|(C|c)net|bbc|BBC', '', title) + ' ' + re.sub('(R|r)euters|(C|c)net|bbc|BBC', '', description) #no filtering on title right now
         
     
 
