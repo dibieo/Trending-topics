@@ -36,7 +36,7 @@ def insert_feeditems(feed_id, url):
             pubDate = ''
                               
             if 'title' in f:
-                title = f.title  # the hash of this string is considered a unique value for each feed
+                title = f.title.encode('utf-8')  # the hash of this string is considered a unique value for each feed
                 if len(title) > 0:
                     h = hashlib.sha512()
                     h.update(str(title))
@@ -49,7 +49,7 @@ def insert_feeditems(feed_id, url):
                     linkHash = h.hexdigest()
             if len(titleHash) > 0 and len(linkHash) > 0:
                 if 'title' in f and 'description'in f:
-                    title = f.title.encode('utf-8')
+                    
                     description = f.description.encode('utf-8')                    
                     pubDate = ''
                     if 'published' in f:    # the value of pubDate tag within each feed
