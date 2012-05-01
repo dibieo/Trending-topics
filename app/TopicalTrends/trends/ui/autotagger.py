@@ -227,7 +227,7 @@ def filterTitleDescription(title, description):
         filteredTitle = filteredTitle + word + ' '
         count+=1
     '''    
-    return re.sub('(R|r)euters|(C|c)net|bbc|BBC|rss|RSS|CNN', '', title) + ' ' + re.sub('(R|r)euters|(C|c)net|bbc|BBC|rss|RSS|CNN', '', description) #no filtering on title right now
+    return re.sub('(R|r)euters|(B|b)log|(C|c)net|bbc|BBC|rss|RSS|CNN', '', title) + ' ' + re.sub('(R|r)euters|(B|b)log|(C|c)net|bbc|BBC|rss|RSS|CNN', '', description) #no filtering on title right now
         
     
 
