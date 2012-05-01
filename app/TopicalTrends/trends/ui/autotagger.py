@@ -212,7 +212,7 @@ def filterTitleDescription(title, description):
     for word in description.split():        
         #eliminate reuter as source mentions at the beginning of descriptions
         if(count <= 10):
-            word = re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', word)
+            word = re.sub('(R|r)euters|(C|c)net|bbc|BBC|rss|RSS|CNN', '', word)
         
         filteredDesc = filteredDesc + word +' '
         count+=1
@@ -222,12 +222,12 @@ def filterTitleDescription(title, description):
     for word in title.split():        
         #eliminate reuter as source mentions at the beginning of descriptions
         if(count <= 10):
-            word = re.sub('(R|r)euters | (C|c)net | bbc | BBC', '', word)
+            word = re.sub('(R|r)euters|(C|c)net|bbc|BBC|rss|RSS|CNN', '', word)
         
         filteredTitle = filteredTitle + word + ' '
         count+=1
     '''    
-    return re.sub('(R|r)euters|(C|c)net|bbc|BBC|rss|RSS', '', title) + ' ' + re.sub('(R|r)euters|(C|c)net|bbc|BBC|rss|RSS', '', description) #no filtering on title right now
+    return re.sub('(R|r)euters|(C|c)net|bbc|BBC|rss|RSS|CNN', '', title) + ' ' + re.sub('(R|r)euters|(C|c)net|bbc|BBC|rss|RSS|CNN', '', description) #no filtering on title right now
         
     
 
