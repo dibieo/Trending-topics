@@ -34,7 +34,7 @@ def index(request):
     print('timing: before freqTopics')
     print(datetime.datetime.now())
 
-    freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=0)
+    freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=0, k=params.maxFreqTopics)
 
     time22 = time1
     time11 = time22 - timedelta(days=2*params.days) # to be used to find the old frequencies of current hot topics
@@ -53,11 +53,11 @@ def index(request):
     if form.is_valid():        
         if(request.GET.has_key('input')):
 
-            #print('timing: before getFreqTopicSets')
-            #print(datetime.datetime.now())
+            print('timing: before getFreqTopicSets')
+            print(datetime.datetime.now())
             freqTopicSets = Analysis.getFreqTopicSets(request.GET['input'], time1, time2) 
-            #print('timing: after getFreqTopicSets')
-            #print(datetime.datetime.now())
+            print('timing: after getFreqTopicSets')
+            print(datetime.datetime.now())
    
             for topicSet in freqTopicSets:
                 tag_ids = []
