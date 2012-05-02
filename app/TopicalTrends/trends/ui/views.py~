@@ -118,8 +118,7 @@ def topics(request):
             time_diff = 30
         time2 = datetime.datetime.now()
         time1 = time2 - timedelta(days=time_diff)
-   # freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=params.maxFreqTopics)
-    freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=0, k=params.maxFreqTopics)
+    freqTopics = Analysis.getFreqTopics(time1, time2, minFreq=10, k=params.maxFreqTopics)
     time22 = time1
     time11 = time22 - timedelta(days=time_diff) # to be used to find the old frequencies of current hot topics
     print time1

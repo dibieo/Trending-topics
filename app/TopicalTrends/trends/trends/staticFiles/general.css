@@ -12,8 +12,24 @@ div.master
 	margin-right:40px;
 }
 
+.frontPage .pane0 a {
+  color: green;
+}
+
 .frontPage .pane1
 {
 	width: 700px;
 	float:left;
+}
+
+.tset_item {
+  padding-top: 10px;
+  padding-bottom:10px;
+}
+
+.tset_item a
+{
+
+  color: green;
+
 }

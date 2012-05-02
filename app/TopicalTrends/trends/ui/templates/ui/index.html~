@@ -46,13 +46,14 @@
                         <div>
 							<div class="topicset">
 
-				<div class="tset_item">
 				([
+				<div class="tset_item">
 				{% for t in topicSet_linkSet.0.0 %}
 				 <a href='/ui?input={{t}}'>{{t}}</a>,
-				{% endfor %}
-				], {{topicSet_linkSet.0.1}})
+				{%endfor%}
 				</div>
+				], {{topicSet_linkSet.0.1}})
+				
 			</div>
                             {%for link in topicSet_linkSet.1%}
 								<div class="link">

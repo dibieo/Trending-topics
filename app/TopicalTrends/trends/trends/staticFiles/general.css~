@@ -4,16 +4,23 @@ div.master
 {
 	width:1000px;
 	height:1000px;
-	background:yellow;
 }
 .frontPage .pane0
 {
-	width: 300px;
+	width: 250px;
+	float:left;
+	margin-right:40px;
 }
 
 .frontPage .pane1
 {
-	background-color:blue;
+	width: 700px;
+	float:left;
+}
+
+.tset_item {
+  padding-top: 10px;
+  padding-bottom:10px;
 }
 
 .tset_item a

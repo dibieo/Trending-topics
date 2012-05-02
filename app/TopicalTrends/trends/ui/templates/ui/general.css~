@@ -16,7 +16,7 @@ div.master
 	background-color:blue;
 }
 
-.tset_item a
+div .tset_item a
 {
 
   color: green;
